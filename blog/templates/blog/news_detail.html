@@ -1,0 +1,27 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}
+  {{ title }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="alert alert-light">
+    <h1>{{ object.title }}</h1>
+    <p>{{ object.text|safe }}</p>
+    <div class="row">
+      <div>
+        <img src="{{ object.author.profile.img.url }}" alt="{{ object.author }}" class="user_images">
+      </div>
+      <div class="ms-2">
+        <span class="text-muted">Публикация: {{ object.date|date:'d E Y' }}</span>
+          <p><b>Автор:<a href="{% url 'user-news' object.author %}">{{ object.author }}</a></p>
+        </div>
+      </div>
+      {% if object.author == user %}
+      <hr>
+      <a href="{% url 'news-update' object.id %}" class="btn btn-info">Обновить статью</a>
+      <a href="{% url 'news-delete' object.id %}" class="btn btn-danger">Удалить статью</a>
+      {% endif %}
+    </div>
+{% endblock %}
